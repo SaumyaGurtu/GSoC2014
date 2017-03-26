@@ -1,0 +1,573 @@
+
+
+Started GET "/" for 127.0.0.1 at 2014-08-24 12:24:45 +0530
+
+ActiveRecord::PendingMigrationError (
+
+Migrations are pending. To resolve this issue, run:
+
+	bin/rake db:migrate RAILS_ENV=development
+
+):
+  activerecord (4.1.1) lib/active_record/migration.rb:389:in `check_pending!'
+  activerecord (4.1.1) lib/active_record/migration.rb:377:in `call'
+  actionpack (4.1.1) lib/action_dispatch/middleware/callbacks.rb:29:in `block in call'
+  activesupport (4.1.1) lib/active_support/callbacks.rb:82:in `run_callbacks'
+  actionpack (4.1.1) lib/action_dispatch/middleware/callbacks.rb:27:in `call'
+  actionpack (4.1.1) lib/action_dispatch/middleware/reloader.rb:73:in `call'
+  actionpack (4.1.1) lib/action_dispatch/middleware/remote_ip.rb:76:in `call'
+  actionpack (4.1.1) lib/action_dispatch/middleware/debug_exceptions.rb:17:in `call'
+  actionpack (4.1.1) lib/action_dispatch/middleware/show_exceptions.rb:30:in `call'
+  railties (4.1.1) lib/rails/rack/logger.rb:38:in `call_app'
+  railties (4.1.1) lib/rails/rack/logger.rb:20:in `block in call'
+  activesupport (4.1.1) lib/active_support/tagged_logging.rb:68:in `block in tagged'
+  activesupport (4.1.1) lib/active_support/tagged_logging.rb:26:in `tagged'
+  activesupport (4.1.1) lib/active_support/tagged_logging.rb:68:in `tagged'
+  railties (4.1.1) lib/rails/rack/logger.rb:20:in `call'
+  actionpack (4.1.1) lib/action_dispatch/middleware/request_id.rb:21:in `call'
+  rack (1.5.2) lib/rack/methodoverride.rb:21:in `call'
+  rack (1.5.2) lib/rack/runtime.rb:17:in `call'
+  activesupport (4.1.1) lib/active_support/cache/strategy/local_cache_middleware.rb:26:in `call'
+  rack (1.5.2) lib/rack/lock.rb:17:in `call'
+  actionpack (4.1.1) lib/action_dispatch/middleware/static.rb:64:in `call'
+  rack (1.5.2) lib/rack/sendfile.rb:112:in `call'
+  railties (4.1.1) lib/rails/engine.rb:514:in `call'
+  railties (4.1.1) lib/rails/application.rb:144:in `call'
+  rack (1.5.2) lib/rack/lock.rb:17:in `call'
+  rack (1.5.2) lib/rack/content_length.rb:14:in `call'
+  rack (1.5.2) lib/rack/handler/webrick.rb:60:in `service'
+  /usr/local/lib/ruby/2.1.0/webrick/httpserver.rb:138:in `service'
+  /usr/local/lib/ruby/2.1.0/webrick/httpserver.rb:94:in `run'
+  /usr/local/lib/ruby/2.1.0/webrick/server.rb:295:in `block in start_thread'
+
+
+  Rendered /usr/local/lib/ruby/gems/2.1.0/gems/actionpack-4.1.1/lib/action_dispatch/middleware/templates/rescues/_source.erb (0.8ms)
+  Rendered /usr/local/lib/ruby/gems/2.1.0/gems/actionpack-4.1.1/lib/action_dispatch/middleware/templates/rescues/_trace.html.erb (1.7ms)
+  Rendered /usr/local/lib/ruby/gems/2.1.0/gems/actionpack-4.1.1/lib/action_dispatch/middleware/templates/rescues/_request_and_response.html.erb (2.1ms)
+  Rendered /usr/local/lib/ruby/gems/2.1.0/gems/actionpack-4.1.1/lib/action_dispatch/middleware/templates/rescues/diagnostics.erb within rescues/layout (97.6ms)
+  [1m[36m (160.7ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) [0m
+  [1m[35m (0.3ms)[0m  select sqlite_version(*)
+  [1m[36m (142.2ms)[0m  [1mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.3ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+Migrating to CreateArticles (20140617173542)
+  [1m[36m (0.2ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.9ms)[0m  CREATE TABLE "articles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "english" text, "phonetic" text, "created_at" datetime, "updated_at" datetime) 
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20140617173542"]]
+  [1m[35m (163.3ms)[0m  commit transaction
+Migrating to AddDetailsToArticles (20140620220505)
+  [1m[36m (0.2ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.8ms)[0m  ALTER TABLE "articles" ADD "category" varchar(255)
+  [1m[36m (0.6ms)[0m  [1mALTER TABLE "articles" ADD "picture" varchar(255)[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20140620220505"]]
+  [1m[36m (193.4ms)[0m  [1mcommit transaction[0m
+Migrating to CreateInstallations (20140621044730)
+  [1m[35m (0.3ms)[0m  begin transaction
+  [1m[36m (0.7ms)[0m  [1mCREATE TABLE "installations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "installation" varchar(255), "email" varchar(255), "address" text, "contact" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.7ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20140621044730"]]
+  [1m[36m (181.2ms)[0m  [1mcommit transaction[0m
+Migrating to CreateLanguages (20140621070207)
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36m (0.8ms)[0m  [1mCREATE TABLE "languages" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35mSQL (0.7ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20140621070207"]]
+  [1m[36m (148.5ms)[0m  [1mcommit transaction[0m
+Migrating to AddLanguageRefToArticles (20140623095050)
+  [1m[35m (0.3ms)[0m  begin transaction
+  [1m[36m (0.9ms)[0m  [1mALTER TABLE "articles" ADD "language_id" integer[0m
+  [1m[35m (0.4ms)[0m  CREATE  INDEX "index_articles_on_language_id" ON "articles" ("language_id")
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20140623095050"]]
+  [1m[35m (182.6ms)[0m  commit transaction
+Migrating to CreateSites (20140623201407)
+  [1m[36m (0.2ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.8ms)[0m  CREATE TABLE "sites" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "installation_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36m (0.5ms)[0m  [1mCREATE  INDEX "index_sites_on_installation_id" ON "sites" ("installation_id")[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20140623201407"]]
+  [1m[36m (159.3ms)[0m  [1mcommit transaction[0m
+Migrating to DeviseCreateUsers (20140625193949)
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36m (0.4ms)[0m  [1mCREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(255) DEFAULT '' NOT NULL, "encrypted_password" varchar(255) DEFAULT '' NOT NULL, "reset_password_token" varchar(255), "reset_password_sent_at" datetime, "remember_created_at" datetime, "sign_in_count" integer DEFAULT 0 NOT NULL, "current_sign_in_at" datetime, "last_sign_in_at" datetime, "current_sign_in_ip" varchar(255), "last_sign_in_ip" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (0.2ms)[0m  CREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_email' AND type='index'
+[0m
+  [1m[35m (0.2ms)[0m  CREATE UNIQUE INDEX "index_users_on_reset_password_token" ON "users" ("reset_password_token")
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20140625193949"]]
+  [1m[35m (177.1ms)[0m  commit transaction
+Migrating to AddDetailsToUsers (20140625210531)
+  [1m[36m (0.4ms)[0m  [1mbegin transaction[0m
+  [1m[35m (1.0ms)[0m  ALTER TABLE "users" ADD "first_name" varchar(255)
+  [1m[36m (0.7ms)[0m  [1mALTER TABLE "users" ADD "last_name" varchar(255)[0m
+  [1m[35mSQL (1.1ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20140625210531"]]
+  [1m[36m (169.0ms)[0m  [1mcommit transaction[0m
+Migrating to RemoveEmailFromUsers (20140625230123)
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36m (1.1ms)[0m  [1mCREATE TEMPORARY TABLE "ausers" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(255) DEFAULT '' NOT NULL, "encrypted_password" varchar(255) DEFAULT '' NOT NULL, "reset_password_token" varchar(255), "reset_password_sent_at" datetime, "remember_created_at" datetime, "sign_in_count" integer DEFAULT 0 NOT NULL, "current_sign_in_at" datetime, "last_sign_in_at" datetime, "current_sign_in_ip" varchar(255), "last_sign_in_ip" varchar(255), "created_at" datetime, "updated_at" datetime, "first_name" varchar(255), "last_name" varchar(255)) [0m
+  [1m[35m (0.4ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+
+  [1m[36m (0.3ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_email' AND type='index'
+[0m
+  [1m[35m (0.6ms)[0m  CREATE UNIQUE INDEX "tindex_ausers_on_reset_password_token" ON "ausers" ("reset_password_token")
+  [1m[36m (0.2ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='tindex_ausers_on_reset_password_token' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='tindex_ausers_on_reset_password_token' AND type='index'
+[0m
+  [1m[35m (0.5ms)[0m  CREATE UNIQUE INDEX "tindex_ausers_on_email" ON "ausers" ("email")
+  [1m[36m (0.1ms)[0m  [1mSELECT * FROM "users"[0m
+  [1m[35m (0.3ms)[0m  DROP TABLE "users"
+  [1m[36m (0.2ms)[0m  [1mCREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "encrypted_password" varchar(255) DEFAULT '' NOT NULL, "reset_password_token" varchar(255), "reset_password_sent_at" datetime, "remember_created_at" datetime, "sign_in_count" integer DEFAULT 0 NOT NULL, "current_sign_in_at" datetime, "last_sign_in_at" datetime, "current_sign_in_ip" varchar(255), "last_sign_in_ip" varchar(255), "created_at" datetime, "updated_at" datetime, "first_name" varchar(255), "last_name" varchar(255)) [0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='tindex_ausers_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='tindex_ausers_on_email' AND type='index'
+
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='tindex_ausers_on_reset_password_token' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='tindex_ausers_on_reset_password_token' AND type='index'
+[0m
+  [1m[35m (0.2ms)[0m  CREATE UNIQUE INDEX "index_users_on_reset_password_token" ON "users" ("reset_password_token")
+  [1m[36m (0.1ms)[0m  [1mSELECT * FROM "ausers"[0m
+  [1m[35m (0.2ms)[0m  DROP TABLE "ausers"
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20140625230123"]]
+  [1m[35m (166.5ms)[0m  commit transaction
+Migrating to AddEmailToUsers (20140625230914)
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.4ms)[0m  ALTER TABLE "users" ADD "email" varchar(255)
+  [1m[36mSQL (0.6ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20140625230914"]]
+  [1m[35m (186.6ms)[0m  commit transaction
+Migrating to RemoveUsernameFromUsers (20140626003527)
+  [1m[36m (0.2ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.7ms)[0m  CREATE TEMPORARY TABLE "ausers" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "encrypted_password" varchar(255) DEFAULT '' NOT NULL, "reset_password_token" varchar(255), "reset_password_sent_at" datetime, "remember_created_at" datetime, "sign_in_count" integer DEFAULT 0 NOT NULL, "current_sign_in_at" datetime, "last_sign_in_at" datetime, "current_sign_in_ip" varchar(255), "last_sign_in_ip" varchar(255), "created_at" datetime, "updated_at" datetime, "first_name" varchar(255), "last_name" varchar(255), "email" varchar(255)) 
+  [1m[36m (0.4ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+[0m
+  [1m[35m (0.2ms)[0m  CREATE UNIQUE INDEX "tindex_ausers_on_reset_password_token" ON "ausers" ("reset_password_token")
+  [1m[36m (0.1ms)[0m  [1mSELECT * FROM "users"[0m
+  [1m[35m (0.2ms)[0m  DROP TABLE "users"
+  [1m[36m (0.2ms)[0m  [1mCREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "encrypted_password" varchar(255) DEFAULT '' NOT NULL, "reset_password_token" varchar(255), "reset_password_sent_at" datetime, "remember_created_at" datetime, "sign_in_count" integer DEFAULT 0 NOT NULL, "current_sign_in_at" datetime, "last_sign_in_at" datetime, "current_sign_in_ip" varchar(255), "last_sign_in_ip" varchar(255), "created_at" datetime, "updated_at" datetime, "first_name" varchar(255), "last_name" varchar(255), "email" varchar(255)) [0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='tindex_ausers_on_reset_password_token' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='tindex_ausers_on_reset_password_token' AND type='index'
+
+  [1m[36m (0.3ms)[0m  [1mCREATE UNIQUE INDEX "index_users_on_reset_password_token" ON "users" ("reset_password_token")[0m
+  [1m[35m (0.1ms)[0m  SELECT * FROM "ausers"
+  [1m[36m (0.2ms)[0m  [1mDROP TABLE "ausers"[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20140626003527"]]
+  [1m[36m (183.9ms)[0m  [1mcommit transaction[0m
+Migrating to AddUsernameToUsers (20140626003549)
+  [1m[35m (0.3ms)[0m  begin transaction
+  [1m[36m (1.0ms)[0m  [1mALTER TABLE "users" ADD "username" varchar(255)[0m
+  [1m[35mSQL (1.1ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20140626003549"]]
+  [1m[36m (170.6ms)[0m  [1mcommit transaction[0m
+Migrating to AddLocationToUsers (20140626034602)
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36m (1.0ms)[0m  [1mALTER TABLE "users" ADD "location" varchar(255)[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20140626034602"]]
+  [1m[36m (149.8ms)[0m  [1mcommit transaction[0m
+Migrating to AddContactToUsers (20140626034812)
+  [1m[35m (0.3ms)[0m  begin transaction
+  [1m[36m (1.0ms)[0m  [1mALTER TABLE "users" ADD "contact" varchar(255)[0m
+  [1m[35mSQL (0.6ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20140626034812"]]
+  [1m[36m (160.0ms)[0m  [1mcommit transaction[0m
+Migrating to AddGenderToUsers (20140626044306)
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.4ms)[0m  [1mALTER TABLE "users" ADD "gender" varchar(255)[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20140626044306"]]
+  [1m[36m (152.6ms)[0m  [1mcommit transaction[0m
+Migrating to AddRoleToUsers (20140626044454)
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36m (1.0ms)[0m  [1mALTER TABLE "users" ADD "role" varchar(255)[0m
+  [1m[35mSQL (1.1ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20140626044454"]]
+  [1m[36m (148.6ms)[0m  [1mcommit transaction[0m
+Migrating to AddLoginApprovalToUsers (20140629153426)
+  [1m[35m (0.3ms)[0m  begin transaction
+  [1m[36m (1.0ms)[0m  [1mALTER TABLE "users" ADD "login_approval" varchar(255)[0m
+  [1m[35mSQL (1.1ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20140629153426"]]
+  [1m[36m (159.3ms)[0m  [1mcommit transaction[0m
+Migrating to CreateVolunteers (20140629191348)
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36m (1.0ms)[0m  [1mCREATE TABLE "volunteers" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "vname" varchar(255), "site_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (0.5ms)[0m  CREATE  INDEX "index_volunteers_on_site_id" ON "volunteers" ("site_id")
+  [1m[36mSQL (0.3ms)[0m  [1mINSERT INTO "schema_migrations" ("version") VALUES (?)[0m  [["version", "20140629191348"]]
+  [1m[35m (169.9ms)[0m  commit transaction
+Migrating to CreateContributors (20140721121316)
+  [1m[36m (0.2ms)[0m  [1mbegin transaction[0m
+  [1m[35m (0.8ms)[0m  CREATE TABLE "contributors" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "site_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36m (0.5ms)[0m  [1mCREATE  INDEX "index_contributors_on_site_id" ON "contributors" ("site_id")[0m
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20140721121316"]]
+  [1m[36m (169.9ms)[0m  [1mcommit transaction[0m
+Migrating to AddLangToUsers (20140814042324)
+  [1m[35m (0.3ms)[0m  begin transaction
+  [1m[36m (1.0ms)[0m  [1mALTER TABLE "users" ADD "lang" varchar(255)[0m
+  [1m[35mSQL (0.5ms)[0m  INSERT INTO "schema_migrations" ("version") VALUES (?)  [["version", "20140814042324"]]
+  [1m[36m (171.0ms)[0m  [1mcommit transaction[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.5ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_articles_on_language_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_articles_on_language_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_contributors_on_site_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_contributors_on_site_id' AND type='index'
+
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_sites_on_installation_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_sites_on_installation_id' AND type='index'
+[0m
+  [1m[35m (0.1ms)[0m              SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_reset_password_token' AND type='index'
+
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_volunteers_on_site_id' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_volunteers_on_site_id' AND type='index'
+[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users"  WHERE "users"."username" = 'Admin1' LIMIT 1[0m
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[35mSQL (0.3ms)[0m  INSERT INTO "users" ("created_at", "email", "encrypted_password", "first_name", "last_name", "login_approval", "role", "updated_at", "username") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["created_at", "2014-08-24 06:55:45.288387"], ["email", "saumyagurtu@gmail.com"], ["encrypted_password", "$2a$10$D8NTwXeU7xHReTF9hRlR.ealkcwvUUdsKRdaY0dzUOzCpWgahD4Ie"], ["first_name", "Adam"], ["last_name", "Wilkins"], ["login_approval", "Yes"], ["role", "Admin"], ["updated_at", "2014-08-24 06:55:45.288387"], ["username", "Admin1"]]
+  [1m[36m (176.1ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mUser Exists (0.2ms)[0m  [1mSELECT  1 AS one FROM "users"  WHERE "users"."username" = 'Admin2' LIMIT 1[0m
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("created_at", "email", "encrypted_password", "first_name", "last_name", "login_approval", "role", "updated_at", "username") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)  [["created_at", "2014-08-24 06:55:45.582206"], ["email", "saumya.gurtu@students.iiit.ac.in"], ["encrypted_password", "$2a$10$7.3D.1FNiYu/1zpvu7QVkezXezpRdAiB7aLkFpE7vaMIbu.Q7JlW6"], ["first_name", "Neil"], ["last_name", "Bohr"], ["login_approval", "Yes"], ["role", "Admin"], ["updated_at", "2014-08-24 06:55:45.582206"], ["username", "Admin2"]]
+  [1m[36m (128.0ms)[0m  [1mcommit transaction[0m
+
+
+Started GET "/" for 127.0.0.1 at 2014-08-24 12:27:21 +0530
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+Processing by WelcomeController#index as HTML
+Completed 401 Unauthorized in 36ms
+
+
+Started GET "/plt/users/sign_in" for 127.0.0.1 at 2014-08-24 12:27:22 +0530
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/shared/_links.erb (1.7ms)
+  Rendered devise/sessions/new.html.erb within layouts/application (22.0ms)
+  Rendered shared/_header.html.erb (7.8ms)
+  Rendered shared/_footer.html.erb (0.4ms)
+Completed 200 OK in 1916ms (Views: 1894.5ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/assets/articles.css?body=1" for 127.0.0.1 at 2014-08-24 12:27:24 +0530
+
+
+Started GET "/assets/contributors.css?body=1" for 127.0.0.1 at 2014-08-24 12:27:24 +0530
+
+
+Started GET "/assets/installations.css?body=1" for 127.0.0.1 at 2014-08-24 12:27:24 +0530
+
+
+Started GET "/assets/languages.css?body=1" for 127.0.0.1 at 2014-08-24 12:27:24 +0530
+
+
+Started GET "/assets/volunteers.css?body=1" for 127.0.0.1 at 2014-08-24 12:27:24 +0530
+
+
+Started GET "/assets/sites.css?body=1" for 127.0.0.1 at 2014-08-24 12:27:24 +0530
+
+
+Started GET "/assets/welcome.css?body=1" for 127.0.0.1 at 2014-08-24 12:27:24 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2014-08-24 12:27:24 +0530
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2014-08-24 12:27:24 +0530
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2014-08-24 12:27:24 +0530
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2014-08-24 12:27:24 +0530
+
+
+Started GET "/assets/articles.js?body=1" for 127.0.0.1 at 2014-08-24 12:27:24 +0530
+
+
+Started GET "/assets/contributors.js?body=1" for 127.0.0.1 at 2014-08-24 12:27:24 +0530
+
+
+Started GET "/assets/languages.js?body=1" for 127.0.0.1 at 2014-08-24 12:27:24 +0530
+
+
+Started GET "/assets/installations.js?body=1" for 127.0.0.1 at 2014-08-24 12:27:24 +0530
+
+
+Started GET "/assets/sites.js?body=1" for 127.0.0.1 at 2014-08-24 12:27:24 +0530
+
+
+Started GET "/assets/volunteers.js?body=1" for 127.0.0.1 at 2014-08-24 12:27:24 +0530
+
+
+Started GET "/assets/welcome.js?body=1" for 127.0.0.1 at 2014-08-24 12:27:24 +0530
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2014-08-24 12:27:24 +0530
+
+
+Started POST "/plt/users/sign_in" for 127.0.0.1 at 2014-08-24 12:27:32 +0530
+Processing by Devise::SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"kEiUL9+ErqnZFFPsRheoelpKD04l/Dia1c5t7r3Wj0Q=", "user"=>{"username"=>"Admin1", "password"=>"[FILTERED]", "remember_me"=>"0"}, "commit"=>"Sign in"}
+  [1m[35mUser Load (0.4ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."username" = 'Admin1'  ORDER BY created_at DESC LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+Binary data inserted for `string` type on column `current_sign_in_ip`
+Binary data inserted for `string` type on column `last_sign_in_ip`
+  [1m[35mSQL (0.3ms)[0m  UPDATE "users" SET "current_sign_in_at" = ?, "current_sign_in_ip" = ?, "last_sign_in_at" = ?, "last_sign_in_ip" = ?, "sign_in_count" = ?, "updated_at" = ? WHERE "users"."id" = 1  [["current_sign_in_at", "2014-08-24 06:57:32.406407"], ["current_sign_in_ip", "127.0.0.1"], ["last_sign_in_at", "2014-08-24 06:57:32.406407"], ["last_sign_in_ip", "127.0.0.1"], ["sign_in_count", 1], ["updated_at", "2014-08-24 06:57:32.407804"]]
+  [1m[36m (225.3ms)[0m  [1mcommit transaction[0m
+Redirected to http://0.0.0.0:3000/
+Completed 302 Found in 352ms (ActiveRecord: 226.1ms)
+
+
+Started GET "/" for 127.0.0.1 at 2014-08-24 12:27:32 +0530
+Processing by WelcomeController#index as HTML
+  [1m[35mUser Load (0.4ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY created_at DESC LIMIT 1
+  Rendered welcome/index.html.erb within layouts/application (2.6ms)
+  Rendered shared/_header.html.erb (11.5ms)
+  Rendered shared/_footer.html.erb (0.0ms)
+Completed 200 OK in 27ms (Views: 24.6ms | ActiveRecord: 0.4ms)
+
+
+Started GET "/assets/contributors.css?body=1" for 127.0.0.1 at 2014-08-24 12:27:32 +0530
+
+
+Started GET "/assets/installations.css?body=1" for 127.0.0.1 at 2014-08-24 12:27:32 +0530
+
+
+Started GET "/assets/articles.css?body=1" for 127.0.0.1 at 2014-08-24 12:27:32 +0530
+
+
+Started GET "/assets/languages.css?body=1" for 127.0.0.1 at 2014-08-24 12:27:32 +0530
+
+
+Started GET "/assets/sites.css?body=1" for 127.0.0.1 at 2014-08-24 12:27:32 +0530
+
+
+Started GET "/assets/volunteers.css?body=1" for 127.0.0.1 at 2014-08-24 12:27:32 +0530
+
+
+Started GET "/assets/welcome.css?body=1" for 127.0.0.1 at 2014-08-24 12:27:32 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2014-08-24 12:27:32 +0530
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2014-08-24 12:27:32 +0530
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2014-08-24 12:27:32 +0530
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2014-08-24 12:27:32 +0530
+
+
+Started GET "/assets/articles.js?body=1" for 127.0.0.1 at 2014-08-24 12:27:32 +0530
+
+
+Started GET "/assets/contributors.js?body=1" for 127.0.0.1 at 2014-08-24 12:27:32 +0530
+
+
+Started GET "/assets/installations.js?body=1" for 127.0.0.1 at 2014-08-24 12:27:32 +0530
+
+
+Started GET "/assets/languages.js?body=1" for 127.0.0.1 at 2014-08-24 12:27:32 +0530
+
+
+Started GET "/assets/sites.js?body=1" for 127.0.0.1 at 2014-08-24 12:27:32 +0530
+
+
+Started GET "/assets/volunteers.js?body=1" for 127.0.0.1 at 2014-08-24 12:27:32 +0530
+
+
+Started GET "/assets/welcome.js?body=1" for 127.0.0.1 at 2014-08-24 12:27:32 +0530
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2014-08-24 12:27:32 +0530
+
+
+Started GET "/users" for 127.0.0.1 at 2014-08-24 12:27:36 +0530
+Processing by UsersController#index as HTML
+  [1m[36mUser Load (0.4ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY created_at DESC LIMIT 1[0m
+  [1m[35mUser Load (0.3ms)[0m  SELECT "users".* FROM "users"   ORDER BY created_at DESC
+  Rendered users/index.html.erb within layouts/application (3.5ms)
+  Rendered shared/_header.html.erb (6.2ms)
+  Rendered shared/_footer.html.erb (0.6ms)
+Completed 200 OK in 30ms (Views: 22.1ms | ActiveRecord: 0.7ms)
+
+
+Started GET "/installations" for 127.0.0.1 at 2014-08-24 12:27:37 +0530
+Processing by InstallationsController#index as HTML
+  [1m[36mUser Load (0.4ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY created_at DESC LIMIT 1[0m
+  [1m[35mInstallation Load (0.2ms)[0m  SELECT "installations".* FROM "installations"
+  Rendered installations/index.html.erb within layouts/application (1.6ms)
+  Rendered shared/_header.html.erb (5.1ms)
+  Rendered shared/_footer.html.erb (0.1ms)
+Completed 200 OK in 29ms (Views: 18.0ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/sites" for 127.0.0.1 at 2014-08-24 12:27:38 +0530
+Processing by SitesController#index as HTML
+  [1m[36mUser Load (0.4ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY created_at DESC LIMIT 1[0m
+  [1m[35mSite Load (0.2ms)[0m  SELECT "sites".* FROM "sites"   ORDER BY created_at DESC
+  Rendered sites/index.html.erb within layouts/application (3.6ms)
+  Rendered shared/_header.html.erb (5.0ms)
+  Rendered shared/_footer.html.erb (0.0ms)
+Completed 200 OK in 37ms (Views: 19.5ms | ActiveRecord: 0.6ms)
+
+
+Started GET "/languages" for 127.0.0.1 at 2014-08-24 12:27:39 +0530
+Processing by LanguagesController#index as HTML
+  [1m[36mUser Load (0.3ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY created_at DESC LIMIT 1[0m
+  [1m[35mLanguage Load (0.2ms)[0m  SELECT "languages".* FROM "languages"
+  Rendered languages/index.html.erb within layouts/application (1.9ms)
+  Rendered shared/_header.html.erb (5.2ms)
+  Rendered shared/_footer.html.erb (0.1ms)
+Completed 200 OK in 27ms (Views: 19.2ms | ActiveRecord: 0.5ms)
+
+
+Started GET "/articles" for 127.0.0.1 at 2014-08-24 12:27:39 +0530
+Processing by ArticlesController#index as HTML
+  [1m[36mUser Load (0.4ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY created_at DESC LIMIT 1[0m
+  [1m[35mArticle Load (0.2ms)[0m  SELECT "articles".* FROM "articles"  WHERE (id > 0 and created_at > '1970-01-01 00:00:01.000000')  ORDER BY created_at DESC
+  Rendered articles/_article.html.erb (0.0ms)
+  Rendered articles/index.html.erb within layouts/application (3.1ms)
+  Rendered shared/_header.html.erb (8.0ms)
+  Rendered shared/_footer.html.erb (0.1ms)
+Completed 200 OK in 32ms (Views: 21.5ms | ActiveRecord: 0.5ms)
+
+
+Started DELETE "/plt/users/sign_out" for 127.0.0.1 at 2014-08-24 12:28:12 +0530
+Processing by Devise::SessionsController#destroy as HTML
+  Parameters: {"authenticity_token"=>"7Ue/PNe8A4FE4T7atVg24uI8CWyquaSGMzMxqyws/HY="}
+  [1m[36mUser Load (0.4ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY created_at DESC LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36m (0.0ms)[0m  [1mcommit transaction[0m
+Redirected to http://0.0.0.0:3000/
+Completed 302 Found in 12ms (ActiveRecord: 0.5ms)
+
+
+Started GET "/" for 127.0.0.1 at 2014-08-24 12:28:12 +0530
+Processing by WelcomeController#index as HTML
+Completed 401 Unauthorized in 1ms
+
+
+Started GET "/plt/users/sign_in" for 127.0.0.1 at 2014-08-24 12:28:12 +0530
+Processing by Devise::SessionsController#new as HTML
+  Rendered devise/shared/_links.erb (0.5ms)
+  Rendered devise/sessions/new.html.erb within layouts/application (3.7ms)
+  Rendered shared/_header.html.erb (5.7ms)
+  Rendered shared/_footer.html.erb (0.0ms)
+Completed 200 OK in 23ms (Views: 21.8ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/articles.css?body=1" for 127.0.0.1 at 2014-08-24 12:28:12 +0530
+
+
+Started GET "/assets/installations.css?body=1" for 127.0.0.1 at 2014-08-24 12:28:12 +0530
+
+
+Started GET "/assets/contributors.css?body=1" for 127.0.0.1 at 2014-08-24 12:28:12 +0530
+
+
+Started GET "/assets/languages.css?body=1" for 127.0.0.1 at 2014-08-24 12:28:12 +0530
+
+
+Started GET "/assets/sites.css?body=1" for 127.0.0.1 at 2014-08-24 12:28:12 +0530
+
+
+Started GET "/assets/volunteers.css?body=1" for 127.0.0.1 at 2014-08-24 12:28:12 +0530
+
+
+Started GET "/assets/welcome.css?body=1" for 127.0.0.1 at 2014-08-24 12:28:12 +0530
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2014-08-24 12:28:12 +0530
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2014-08-24 12:28:12 +0530
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2014-08-24 12:28:12 +0530
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2014-08-24 12:28:12 +0530
+
+
+Started GET "/assets/articles.js?body=1" for 127.0.0.1 at 2014-08-24 12:28:12 +0530
+
+
+Started GET "/assets/contributors.js?body=1" for 127.0.0.1 at 2014-08-24 12:28:12 +0530
+
+
+Started GET "/assets/installations.js?body=1" for 127.0.0.1 at 2014-08-24 12:28:12 +0530
+
+
+Started GET "/assets/languages.js?body=1" for 127.0.0.1 at 2014-08-24 12:28:12 +0530
+
+
+Started GET "/assets/sites.js?body=1" for 127.0.0.1 at 2014-08-24 12:28:12 +0530
+
+
+Started GET "/assets/volunteers.js?body=1" for 127.0.0.1 at 2014-08-24 12:28:12 +0530
+
+
+Started GET "/assets/welcome.js?body=1" for 127.0.0.1 at 2014-08-24 12:28:12 +0530
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2014-08-24 12:28:12 +0530

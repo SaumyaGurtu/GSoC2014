@@ -1,0 +1,589 @@
+  [1m[36m (0.4ms)[0m  [1mCREATE TABLE "articles" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "english" text, "phonetic" text, "created_at" datetime, "updated_at" datetime, "category" varchar(255), "picture" varchar(255), "language_id" integer) [0m
+  [1m[35m (0.2ms)[0m  select sqlite_version(*)
+  [1m[36m (0.2ms)[0m  [1mCREATE  INDEX "index_articles_on_language_id" ON "articles" ("language_id")[0m
+  [1m[35m (0.2ms)[0m  CREATE TABLE "contributors" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "site_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36m (0.2ms)[0m  [1mCREATE  INDEX "index_contributors_on_site_id" ON "contributors" ("site_id")[0m
+  [1m[35m (0.3ms)[0m  CREATE TABLE "installations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "installation" varchar(255), "email" varchar(255), "address" text, "contact" varchar(255), "created_at" datetime, "updated_at" datetime) 
+  [1m[36m (0.2ms)[0m  [1mCREATE TABLE "languages" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (0.2ms)[0m  CREATE TABLE "sites" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "installation_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36m (0.2ms)[0m  [1mCREATE  INDEX "index_sites_on_installation_id" ON "sites" ("installation_id")[0m
+  [1m[35m (0.3ms)[0m  CREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "encrypted_password" varchar(255) DEFAULT '' NOT NULL, "reset_password_token" varchar(255), "reset_password_sent_at" datetime, "remember_created_at" datetime, "sign_in_count" integer DEFAULT 0 NOT NULL, "current_sign_in_at" datetime, "last_sign_in_at" datetime, "current_sign_in_ip" varchar(255), "last_sign_in_ip" varchar(255), "created_at" datetime, "updated_at" datetime, "first_name" varchar(255), "last_name" varchar(255), "email" varchar(255), "username" varchar(255), "location" varchar(255), "contact" varchar(255), "gender" varchar(255), "role" varchar(255), "login_approval" varchar(255), "lang" varchar(255)) 
+  [1m[36m (0.2ms)[0m  [1mCREATE UNIQUE INDEX "index_users_on_reset_password_token" ON "users" ("reset_password_token")[0m
+  [1m[35m (0.2ms)[0m  CREATE TABLE "volunteers" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "vname" varchar(255), "site_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36m (0.2ms)[0m  [1mCREATE  INDEX "index_volunteers_on_site_id" ON "volunteers" ("site_id")[0m
+  [1m[35m (0.2ms)[0m  CREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) 
+  [1m[36m (0.2ms)[0m  [1mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [1m[35m (0.1ms)[0m  SELECT version FROM "schema_migrations"
+  [1m[36m (0.1ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140814042324')[0m
+  [1m[35m (0.1ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20140626003549')
+  [1m[36m (0.1ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140626034812')[0m
+  [1m[35m (0.1ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20140626044306')
+  [1m[36m (0.1ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140623095050')[0m
+  [1m[35m (0.1ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20140629153426')
+  [1m[36m (0.1ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140617173542')[0m
+  [1m[35m (0.1ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20140626044454')
+  [1m[36m (0.1ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140626003527')[0m
+  [1m[35m (0.1ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20140625193949')
+  [1m[36m (0.1ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140629191348')[0m
+  [1m[35m (0.1ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20140625230914')
+  [1m[36m (0.1ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140721121316')[0m
+  [1m[35m (0.1ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20140626034602')
+  [1m[36m (0.1ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140625230123')[0m
+  [1m[35m (0.1ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20140621044730')
+  [1m[36m (0.1ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140620220505')[0m
+  [1m[35m (0.1ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20140625210531')
+  [1m[36m (0.1ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140621070207')[0m
+  [1m[35m (0.1ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20140623201407')
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "installations"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "installations" ("installation", "email", "address", "contact", "created_at", "updated_at", "id") VALUES ('MyString', 'MyString', 'MyText', 'MyString', '2014-08-24 06:56:56', '2014-08-24 06:56:56', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "installations" ("installation", "email", "address", "contact", "created_at", "updated_at", "id") VALUES ('MyString', 'MyString', 'MyText', 'MyString', '2014-08-24 06:56:56', '2014-08-24 06:56:56', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "articles"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "articles" ("id", "english", "phonetic", "created_at", "updated_at") VALUES (1, 'MyText2', 'MyTextp2', '2014-08-24 06:56:56', '2014-08-24 06:56:56')[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "articles" ("id", "english", "phonetic", "created_at", "updated_at") VALUES (2, 'MyText1', 'MyTextp1', '2014-08-24 06:56:56', '2014-08-24 06:56:56')
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "volunteers"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "volunteers" ("vname", "site_id", "created_at", "updated_at", "id") VALUES ('MyString', NULL, '2014-08-24 06:56:56', '2014-08-24 06:56:56', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "volunteers" ("vname", "site_id", "created_at", "updated_at", "id") VALUES ('MyString', NULL, '2014-08-24 06:56:56', '2014-08-24 06:56:56', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "users" ("id", "encrypted_password", "reset_password_token", "reset_password_sent_at", "remember_created_at", "sign_in_count", "current_sign_in_at", "last_sign_in_at", "current_sign_in_ip", "last_sign_in_ip", "created_at", "updated_at", "first_name", "last_name", "email", "username", "location", "contact", "gender", "role", "login_approval", "lang") VALUES (1, '$2a$04$/YZVffcQpL3vJviQO6zv1OR4JYzqOYVcrRAdTVeg8GN6oGKFyNJhu', 'nil', 'nil', 'nil', 1, '2014-08-15 14:06:09.000000', '2014-08-15 14:06:09.000000', '127.0.0.1', '127.0.0.1', '2014-08-15 14:05:50.000000', '2014-08-15 14:06:54.000000', 'Walter', 'Wilkins', 'nil', 'Wander', 'nil', 'nil', 'nil', 'Admin', 't', 'nil')[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "users" ("id", "encrypted_password", "first_name", "last_name", "email", "username", "location", "contact", "gender", "role", "login_approval", "lang", "created_at", "updated_at") VALUES (2, '$2a$04$licY8oLgseWWRvn9FxVTy.jsC6FEQKf48bX9BsYtDpAVDxmgxaZ/y', 'Rose', 'Robinson', 'nil', 'Rose', 'nil', 'nil', 'nil', 'Volunteer', 't', 'nil', '2014-08-24 06:56:56', '2014-08-24 06:56:56')
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "users" ("id", "encrypted_password", "first_name", "last_name", "email", "username", "location", "contact", "gender", "role", "login_approval", "lang", "created_at", "updated_at") VALUES (3, '$2a$04$sj2TSN.8z1jtTeCd58QcJeit/ulwVGFeryJgcyHzABURBKb9U0TVS', 'Pamela', 'Vickers', 'nil', 'Pamela', 'nil', 'nil', 'nil', 'Contributor', 't', 'nil', '2014-08-24 06:56:56', '2014-08-24 06:56:56')[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "users" ("id", "encrypted_password", "first_name", "last_name", "email", "username", "location", "contact", "gender", "role", "login_approval", "lang", "created_at", "updated_at") VALUES (4, '$2a$04$yHVg29KUlxlx0eOHEIG7DeeJsgYgl/IlbTJvu/kJCeFW4GUVn1D.2', 'Sylvain', 'Abelard', 'nil', 'Sylvain', 'nil', 'nil', 'nil', 'Guest', 'Not Yet', 'nil', '2014-08-24 06:56:56', '2014-08-24 06:56:56')
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "sites"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "sites" ("id", "name", "installation_id", "created_at", "updated_at") VALUES (1, 'MyString', NULL, '2014-08-24 06:56:56', '2014-08-24 06:56:56')
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "sites" ("id", "name", "installation_id", "created_at", "updated_at") VALUES (2, 'Myerror', NULL, '2014-08-24 06:56:56', '2014-08-24 06:56:56')[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "contributors"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "contributors" ("name", "site_id", "created_at", "updated_at", "id") VALUES ('MyString', NULL, '2014-08-24 06:56:56', '2014-08-24 06:56:56', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "contributors" ("name", "site_id", "created_at", "updated_at", "id") VALUES ('MyString', NULL, '2014-08-24 06:56:56', '2014-08-24 06:56:56', 298486374)
+  [1m[36mFixture Delete (0.0ms)[0m  [1mDELETE FROM "languages"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "languages" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2014-08-24 06:56:56', '2014-08-24 06:56:56', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "languages" ("name", "created_at", "updated_at", "id") VALUES ('MyString', '2014-08-24 06:56:56', '2014-08-24 06:56:56', 298486374)[0m
+  [1m[35m (0.1ms)[0m  commit transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+--------------------------------------------------------------
+VolunteersControllerTest: test_no_route_like_/volunteers_exist
+--------------------------------------------------------------
+  [1m[35mUser Load (0.3ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ?  ORDER BY created_at DESC LIMIT 1  [["id", 1]]
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+----------------------------------------
+VolunteersControllerTest: test_the_truth
+----------------------------------------
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ?  ORDER BY created_at DESC LIMIT 1[0m  [["id", 1]]
+  [1m[35m (0.1ms)[0m  rollback transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+----------------------------------------------------------------------------------
+InstallationTest: test_should_not_save_installation_without_its_field_installation
+----------------------------------------------------------------------------------
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36m (0.1ms)[0m  [1mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  rollback transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+--------------------------------
+InstallationTest: test_the_truth
+--------------------------------
+  [1m[35m (0.0ms)[0m  rollback transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+---------------------------------------------------------------------
+UserTest: test_password_(is_empty)_and_its_confirmation_are_different
+---------------------------------------------------------------------
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mUser Exists (0.1ms)[0m  [1mSELECT  1 AS one FROM "users"  WHERE "users"."username" = 'Alia' LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  ROLLBACK TO SAVEPOINT active_record_1
+  [1m[36m (0.0ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+----------------------------------------------------------
+UserTest: test_password_and_its_confirmation_are_different
+----------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mUser Exists (0.1ms)[0m  SELECT  1 AS one FROM "users"  WHERE "users"."username" = 'Alia' LIMIT 1
+  [1m[36m (0.0ms)[0m  [1mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  rollback transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+-----------------------------------------------------
+UserTest: test_password_and_its_confirmation_are_same
+-----------------------------------------------------
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mUser Exists (0.1ms)[0m  [1mSELECT  1 AS one FROM "users"  WHERE "users"."username" = 'Alia' LIMIT 1[0m
+Binary data inserted for `string` type on column `encrypted_password`
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO "users" ("created_at", "encrypted_password", "first_name", "last_name", "login_approval", "role", "updated_at", "username") VALUES (?, ?, ?, ?, ?, ?, ?, ?)  [["created_at", "2014-08-24 06:56:56.415386"], ["encrypted_password", "$2a$04$o1ld6.ceWI6rjKzLp9RQVeUqWgLnxu8lXSp650GyMZ6DbSJS3eNpu"], ["first_name", "Aliaa"], ["last_name", "Bhatt"], ["login_approval", "Not_Yet"], ["role", "Guest"], ["updated_at", "2014-08-24 06:56:56.415386"], ["username", "Alia"]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  rollback transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+----------------------------------------------------------------
+UserTest: test_should_not_save_user_without_its_field_first_name
+----------------------------------------------------------------
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mUser Exists (0.1ms)[0m  [1mSELECT  1 AS one FROM "users"  WHERE "users"."username" = 'Alia' LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  ROLLBACK TO SAVEPOINT active_record_1
+  [1m[36m (0.0ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+---------------------------------------------------------------
+UserTest: test_should_not_save_user_without_its_field_last_name
+---------------------------------------------------------------
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mUser Exists (0.1ms)[0m  SELECT  1 AS one FROM "users"  WHERE "users"."username" = 'Alia' LIMIT 1
+  [1m[36m (0.0ms)[0m  [1mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  rollback transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+--------------------------------------------------------------------
+UserTest: test_should_not_save_user_without_its_field_login_approval
+--------------------------------------------------------------------
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mUser Exists (0.1ms)[0m  [1mSELECT  1 AS one FROM "users"  WHERE "users"."username" = 'Alia' LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  ROLLBACK TO SAVEPOINT active_record_1
+  [1m[36m (0.0ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+----------------------------------------------------------
+UserTest: test_should_not_save_user_without_its_field_role
+----------------------------------------------------------
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mUser Exists (0.1ms)[0m  SELECT  1 AS one FROM "users"  WHERE "users"."username" = 'Alia' LIMIT 1
+  [1m[36m (0.0ms)[0m  [1mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  rollback transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+--------------------------------------------------------------
+UserTest: test_should_not_save_user_without_its_field_username
+--------------------------------------------------------------
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mUser Exists (0.1ms)[0m  [1mSELECT  1 AS one FROM "users"  WHERE "users"."username" IS NULL LIMIT 1[0m
+  [1m[35m (0.0ms)[0m  ROLLBACK TO SAVEPOINT active_record_1
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+------------------------------------------------------------------------------------------------------------
+UserTest: test_should_not_save_user_without_its_fields_username,_role,_login_approval,_first_name,_last_name
+------------------------------------------------------------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mUser Exists (0.1ms)[0m  SELECT  1 AS one FROM "users"  WHERE "users"."username" IS NULL LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mROLLBACK TO SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  rollback transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+------------------------
+UserTest: test_the_truth
+------------------------
+  [1m[35m (0.0ms)[0m  rollback transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+----------------------------------------------------------------------------
+ArticlesControllerTest: test_index_should_render_correct_template_and_layout
+----------------------------------------------------------------------------
+  [1m[35mUser Load (0.1ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ?  ORDER BY created_at DESC LIMIT 1  [["id", 1]]
+Processing by ArticlesController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY created_at DESC LIMIT 1[0m
+Redirected to http://test.host/
+Completed 302 Found in 876ms (ActiveRecord: 0.2ms)
+  [1m[35m (0.1ms)[0m  rollback transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+------------------------------------------------------------------------
+ArticlesControllerTest: test_should_create_photo_and_go_to_its_show_page
+------------------------------------------------------------------------
+  [1m[35mUser Load (0.1ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ?  ORDER BY created_at DESC LIMIT 1  [["id", 1]]
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "articles"[0m
+Processing by ArticlesController#create as HTML
+  Parameters: {"article"=>{"category"=>"Weapon", "english"=>"Knife"}}
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY created_at DESC LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "articles" ("category", "created_at", "english", "updated_at") VALUES (?, ?, ?, ?)  [["category", "Weapon"], ["created_at", "2014-08-24 06:56:57.333527"], ["english", "Knife"], ["updated_at", "2014-08-24 06:56:57.333527"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://test.host/articles/3
+Completed 302 Found in 13ms (ActiveRecord: 0.5ms)
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "articles"
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+------------------------------------------------
+ArticlesControllerTest: test_should_delete_photo
+------------------------------------------------
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ?  ORDER BY created_at DESC LIMIT 1[0m  [["id", 1]]
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "languages" ("created_at", "name", "updated_at") VALUES (?, ?, ?)[0m  [["created_at", "2014-08-24 06:56:57.341578"], ["name", "Chuukese"], ["updated_at", "2014-08-24 06:56:57.341578"]]
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "articles" ("category", "created_at", "language_id", "updated_at") VALUES (?, ?, ?, ?)  [["category", "Food"], ["created_at", "2014-08-24 06:56:57.343455"], ["language_id", 980190963], ["updated_at", "2014-08-24 06:56:57.343455"]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "articles"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "articles"[0m
+Processing by ArticlesController#destroy as HTML
+  Parameters: {"language_id"=>"980190963", "id"=>"3"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY created_at DESC LIMIT 1
+  [1m[36mArticle Load (0.2ms)[0m  [1mSELECT  "articles".* FROM "articles"  WHERE "articles"."id" = ?  ORDER BY created_at DESC LIMIT 1[0m  [["id", 3]]
+  [1m[35mArticle Load (0.0ms)[0m  SELECT  "articles".* FROM "articles"  WHERE "articles"."id" = ?  ORDER BY created_at DESC LIMIT 1  [["id", 3]]
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.1ms)[0m  DELETE FROM "articles" WHERE "articles"."id" = ?  [["id", 3]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://test.host/articles
+Completed 302 Found in 6ms (ActiveRecord: 0.7ms)
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "articles"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "articles"[0m
+  [1m[35mArticle Load (0.2ms)[0m  SELECT  "articles".* FROM "articles"  WHERE "articles"."id" = 3  ORDER BY created_at DESC LIMIT 1
+  [1m[36mLanguage Load (0.1ms)[0m  [1mSELECT  "languages".* FROM "languages"  WHERE "languages"."id" = 980190963 LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  rollback transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+--------------------------------------
+ArticlesControllerTest: test_the_truth
+--------------------------------------
+  [1m[35mUser Load (0.1ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ?  ORDER BY created_at DESC LIMIT 1  [["id", 1]]
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+-------------------------------------------------------------
+ArticleTest: test_should_save_article/photo_without_any_field
+-------------------------------------------------------------
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "articles" ("created_at", "updated_at") VALUES (?, ?)  [["created_at", "2014-08-24 06:56:57.360982"], ["updated_at", "2014-08-24 06:56:57.360982"]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  rollback transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+---------------------------
+ArticleTest: test_the_truth
+---------------------------
+  [1m[35m (0.0ms)[0m  rollback transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+-----------------------------------------------------------------------------
+LanguagesControllerTest: test_index_should_render_correct_template_and_layout
+-----------------------------------------------------------------------------
+  [1m[35mUser Load (0.1ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ?  ORDER BY created_at DESC LIMIT 1  [["id", 1]]
+Processing by LanguagesController#index as HTML
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY created_at DESC LIMIT 1[0m
+Redirected to http://test.host/
+Completed 302 Found in 800ms (ActiveRecord: 0.2ms)
+  [1m[35m (0.1ms)[0m  rollback transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+----------------------------------------------------------------------------
+LanguagesControllerTest: test_should_create_language_and_go_to_its_show_page
+----------------------------------------------------------------------------
+  [1m[35mUser Load (0.1ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ?  ORDER BY created_at DESC LIMIT 1  [["id", 1]]
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "languages"[0m
+Processing by LanguagesController#create as HTML
+  Parameters: {"language"=>{"name"=>"Chuukese"}}
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY created_at DESC LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "languages" ("created_at", "name", "updated_at") VALUES (?, ?, ?)  [["created_at", "2014-08-24 06:56:58.177626"], ["name", "Chuukese"], ["updated_at", "2014-08-24 06:56:58.177626"]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://test.host/languages/980190963
+Completed 302 Found in 6ms (ActiveRecord: 0.4ms)
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "languages"
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+----------------------------------------------------------------------------------------------
+LanguagesControllerTest: test_should_delete_language_along_with_all_photos_under_that_language
+----------------------------------------------------------------------------------------------
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ?  ORDER BY created_at DESC LIMIT 1[0m  [["id", 1]]
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "languages" ("created_at", "name", "updated_at") VALUES (?, ?, ?)[0m  [["created_at", "2014-08-24 06:56:58.182366"], ["name", "Sanskrit"], ["updated_at", "2014-08-24 06:56:58.182366"]]
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "articles" ("category", "created_at", "language_id", "updated_at") VALUES (?, ?, ?, ?)  [["category", "Weapon"], ["created_at", "2014-08-24 06:56:58.183995"], ["language_id", 980190963], ["updated_at", "2014-08-24 06:56:58.183995"]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "languages"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "languages"[0m
+Processing by LanguagesController#destroy as HTML
+  Parameters: {"id"=>"980190963"}
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY created_at DESC LIMIT 1
+  [1m[36mLanguage Load (0.2ms)[0m  [1mSELECT  "languages".* FROM "languages"  WHERE "languages"."id" = ? LIMIT 1[0m  [["id", 980190963]]
+  [1m[35mLanguage Load (0.0ms)[0m  SELECT  "languages".* FROM "languages"  WHERE "languages"."id" = ? LIMIT 1  [["id", 980190963]]
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mArticle Load (0.2ms)[0m  SELECT "articles".* FROM "articles"  WHERE "articles"."language_id" = ?  ORDER BY created_at DESC  [["language_id", 980190963]]
+  [1m[36mSQL (0.1ms)[0m  [1mDELETE FROM "articles" WHERE "articles"."id" = ?[0m  [["id", 3]]
+  [1m[35mSQL (0.1ms)[0m  DELETE FROM "languages" WHERE "languages"."id" = ?  [["id", 980190963]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://test.host/languages
+Completed 302 Found in 35ms (ActiveRecord: 1.0ms)
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "languages"
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "languages"[0m
+  [1m[35mLanguage Load (0.1ms)[0m  SELECT  "languages".* FROM "languages"  WHERE "languages"."id" = 980190963 LIMIT 1
+  [1m[36mArticle Load (0.1ms)[0m  [1mSELECT  "articles".* FROM "articles"  WHERE "articles"."language_id" = 980190963  ORDER BY created_at DESC LIMIT 1[0m
+  [1m[35mArticle Load (0.1ms)[0m  SELECT  "articles".* FROM "articles"  WHERE "articles"."id" = 3  ORDER BY created_at DESC LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+-------------------------------------------------------------------------
+LanguagesControllerTest: test_should_not_create_language_without_its_name
+-------------------------------------------------------------------------
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ?  ORDER BY created_at DESC LIMIT 1[0m  [["id", 1]]
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "languages"
+Processing by LanguagesController#create as HTML
+  Parameters: {"language"=>{}}
+Redirected to http://test.host/
+Completed 302 Found in 1ms (ActiveRecord: 0.0ms)
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "languages"[0m
+  [1m[35m (0.1ms)[0m  rollback transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+---------------------------------------
+LanguagesControllerTest: test_the_truth
+---------------------------------------
+  [1m[35mUser Load (0.1ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ?  ORDER BY created_at DESC LIMIT 1  [["id", 1]]
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+----------------------------------------------------------
+SiteTest: test_should_not_save_site_without_its_field_name
+----------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  ROLLBACK TO SAVEPOINT active_record_1
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+------------------------
+SiteTest: test_the_truth
+------------------------
+  [1m[36m (0.0ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+---------------------------------------------------------------------------
+WelcomeControllerTest: test_index_should_render_correct_template_and_layout
+---------------------------------------------------------------------------
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ?  ORDER BY created_at DESC LIMIT 1[0m  [["id", 1]]
+Processing by WelcomeController#index as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY created_at DESC LIMIT 1
+Redirected to http://test.host/
+Completed 302 Found in 793ms (ActiveRecord: 0.2ms)
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+---------------------------------------------------------------------
+VolunteerTest: test_should_not_save_volunteer_without_its_field_vname
+---------------------------------------------------------------------
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  ROLLBACK TO SAVEPOINT active_record_1
+  [1m[36m (0.0ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+-----------------------------
+VolunteerTest: test_the_truth
+-----------------------------
+  [1m[36m (0.0ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+-------------------------------------------------------------------
+ContributorsControllerTest: test_no_route_like_/contributors_exists
+-------------------------------------------------------------------
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ?  ORDER BY created_at DESC LIMIT 1[0m  [["id", 1]]
+  [1m[35m (0.1ms)[0m  rollback transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+------------------------------------------
+ContributorsControllerTest: test_the_truth
+------------------------------------------
+  [1m[35mUser Load (0.1ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ?  ORDER BY created_at DESC LIMIT 1  [["id", 1]]
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+---------------------------------------------------------------------------------
+InstallationsControllerTest: test_index_should_render_correct_template_and_layout
+---------------------------------------------------------------------------------
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ?  ORDER BY created_at DESC LIMIT 1[0m  [["id", 1]]
+Processing by InstallationsController#index as HTML
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY created_at DESC LIMIT 1
+Redirected to http://test.host/
+Completed 302 Found in 785ms (ActiveRecord: 0.2ms)
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+------------------------------------------------------------------------------------
+InstallationsControllerTest: test_should_create_installation_and_go_to_its_show_page
+------------------------------------------------------------------------------------
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ?  ORDER BY created_at DESC LIMIT 1[0m  [["id", 1]]
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "installations"
+Processing by InstallationsController#create as HTML
+  Parameters: {"installation"=>{"installation"=>"Albania"}}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY created_at DESC LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "installations" ("created_at", "installation", "updated_at") VALUES (?, ?, ?)[0m  [["created_at", "2014-08-24 06:56:59.853895"], ["installation", "Albania"], ["updated_at", "2014-08-24 06:56:59.853895"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Redirected to http://test.host/installations/980190963
+Completed 302 Found in 6ms (ActiveRecord: 0.5ms)
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "installations"[0m
+  [1m[35m (0.1ms)[0m  rollback transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+---------------------------------------------------------------------------------------------------------
+InstallationsControllerTest: test_should_delete_installation_along_with_all_sites_under_that_installation
+---------------------------------------------------------------------------------------------------------
+  [1m[35mUser Load (0.1ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ?  ORDER BY created_at DESC LIMIT 1  [["id", 1]]
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "installations" ("created_at", "installation", "updated_at") VALUES (?, ?, ?)  [["created_at", "2014-08-24 06:56:59.858471"], ["installation", "Azerbaijan"], ["updated_at", "2014-08-24 06:56:59.858471"]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "sites" ("created_at", "installation_id", "name", "updated_at") VALUES (?, ?, ?, ?)[0m  [["created_at", "2014-08-24 06:56:59.860028"], ["installation_id", 980190963], ["name", "Leh"], ["updated_at", "2014-08-24 06:56:59.860028"]]
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "installations"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "installations"
+Processing by InstallationsController#destroy as HTML
+  Parameters: {"id"=>"980190963"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY created_at DESC LIMIT 1[0m
+  [1m[35mInstallation Load (0.2ms)[0m  SELECT  "installations".* FROM "installations"  WHERE "installations"."id" = ? LIMIT 1  [["id", 980190963]]
+  [1m[36mInstallation Load (0.0ms)[0m  [1mSELECT  "installations".* FROM "installations"  WHERE "installations"."id" = ? LIMIT 1[0m  [["id", 980190963]]
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSite Load (0.1ms)[0m  [1mSELECT "sites".* FROM "sites"  WHERE "sites"."installation_id" = ?  ORDER BY created_at DESC[0m  [["installation_id", 980190963]]
+  [1m[35mVolunteer Load (0.1ms)[0m  SELECT "volunteers".* FROM "volunteers"  WHERE "volunteers"."site_id" = ?  [["site_id", 3]]
+  [1m[36mContributor Load (0.1ms)[0m  [1mSELECT "contributors".* FROM "contributors"  WHERE "contributors"."site_id" = ?[0m  [["site_id", 3]]
+  [1m[35mSQL (0.1ms)[0m  DELETE FROM "sites" WHERE "sites"."id" = ?  [["id", 3]]
+  [1m[36mSQL (0.1ms)[0m  [1mDELETE FROM "installations" WHERE "installations"."id" = ?[0m  [["id", 980190963]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Redirected to http://test.host/installations
+Completed 302 Found in 11ms (ActiveRecord: 1.1ms)
+  [1m[36m (0.2ms)[0m  [1mSELECT COUNT(*) FROM "installations"[0m
+  [1m[35m (0.2ms)[0m  SELECT COUNT(*) FROM "installations"
+  [1m[36mInstallation Load (0.1ms)[0m  [1mSELECT  "installations".* FROM "installations"  WHERE "installations"."id" = 980190963 LIMIT 1[0m
+  [1m[35mSite Load (0.2ms)[0m  SELECT  "sites".* FROM "sites"  WHERE "sites"."installation_id" = 980190963  ORDER BY created_at DESC LIMIT 1
+  [1m[36mSite Load (0.2ms)[0m  [1mSELECT  "sites".* FROM "sites"  WHERE "sites"."id" = 3  ORDER BY created_at DESC LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  rollback transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+---------------------------------------------------------------------------------
+InstallationsControllerTest: test_should_not_create_installation_without_its_name
+---------------------------------------------------------------------------------
+  [1m[35mUser Load (0.1ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ?  ORDER BY created_at DESC LIMIT 1  [["id", 1]]
+  [1m[36m (0.2ms)[0m  [1mSELECT COUNT(*) FROM "installations"[0m
+Processing by InstallationsController#create as HTML
+  Parameters: {"installation"=>{"email"=>"Albania@pc.com"}}
+  [1m[35mUser Load (0.2ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY created_at DESC LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  ROLLBACK TO SAVEPOINT active_record_1
+Redirected to http://test.host/
+Completed 302 Found in 805ms (ActiveRecord: 0.4ms)
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "installations"[0m
+  [1m[35m (0.1ms)[0m  rollback transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+-------------------------------------------
+InstallationsControllerTest: test_the_truth
+-------------------------------------------
+  [1m[35mUser Load (0.1ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ?  ORDER BY created_at DESC LIMIT 1  [["id", 1]]
+  [1m[36m (0.0ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+----------------------------------------------------------
+UserFlowsTest: test_should_route_to_contributor_under_site
+----------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+------------------------------------------------
+UserFlowsTest: test_should_route_to_installation
+------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+--------------------------------------------
+UserFlowsTest: test_should_route_to_language
+--------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+-----------------------------------------
+UserFlowsTest: test_should_route_to_photo
+-----------------------------------------
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+----------------------------------------
+UserFlowsTest: test_should_route_to_site
+----------------------------------------
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+----------------------------------------
+UserFlowsTest: test_should_route_to_user
+----------------------------------------
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+--------------------------------------------------------
+UserFlowsTest: test_should_route_to_volunteer_under_site
+--------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+-----------------------------
+UserFlowsTest: test_the_truth
+-----------------------------
+  [1m[36m (0.0ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+------------------------------------------------------------------
+LanguageTest: test_should_not_save_language_without_its_field_name
+------------------------------------------------------------------
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  ROLLBACK TO SAVEPOINT active_record_1
+  [1m[36m (0.0ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+----------------------------
+LanguageTest: test_the_truth
+----------------------------
+  [1m[36m (0.0ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+-------------------------------------------------------------------------
+SitesControllerTest: test_index_should_render_correct_template_and_layout
+-------------------------------------------------------------------------
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ?  ORDER BY created_at DESC LIMIT 1[0m  [["id", 1]]
+Processing by SitesController#index as HTML
+  [1m[35mUser Load (0.3ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY created_at DESC LIMIT 1
+Redirected to http://test.host/
+Completed 302 Found in 842ms (ActiveRecord: 0.3ms)
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+--------------------------------------------------------------------
+SitesControllerTest: test_should_create_site_and_go_to_its_show_page
+--------------------------------------------------------------------
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ?  ORDER BY created_at DESC LIMIT 1[0m  [["id", 1]]
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "sites"
+Processing by SitesController#create as HTML
+  Parameters: {"site"=>{"name"=>"Devoll"}}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY created_at DESC LIMIT 1[0m
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "sites" ("created_at", "name", "updated_at") VALUES (?, ?, ?)[0m  [["created_at", "2014-08-24 06:57:01.594540"], ["name", "Devoll"], ["updated_at", "2014-08-24 06:57:01.594540"]]
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+Redirected to http://test.host/sites/3
+Completed 302 Found in 6ms (ActiveRecord: 0.5ms)
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "sites"[0m
+  [1m[35m (0.1ms)[0m  rollback transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+------------------------------------------------------------------------------------------------
+SitesControllerTest: test_should_delete_site_along_with_all_volunteers_and_contributors_under_it
+------------------------------------------------------------------------------------------------
+  [1m[35mUser Load (0.1ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ?  ORDER BY created_at DESC LIMIT 1  [["id", 1]]
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "installations" ("created_at", "installation", "updated_at") VALUES (?, ?, ?)  [["created_at", "2014-08-24 06:57:01.599207"], ["installation", "Azerbaijan"], ["updated_at", "2014-08-24 06:57:01.599207"]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "sites" ("created_at", "installation_id", "name", "updated_at") VALUES (?, ?, ?, ?)[0m  [["created_at", "2014-08-24 06:57:01.600719"], ["installation_id", 980190963], ["name", "Leh"], ["updated_at", "2014-08-24 06:57:01.600719"]]
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.1ms)[0m  INSERT INTO "volunteers" ("created_at", "site_id", "updated_at", "vname") VALUES (?, ?, ?, ?)  [["created_at", "2014-08-24 06:57:01.602021"], ["site_id", 3], ["updated_at", "2014-08-24 06:57:01.602021"], ["vname", "Saumya"]]
+  [1m[36m (0.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.1ms)[0m  [1mINSERT INTO "contributors" ("created_at", "name", "site_id", "updated_at") VALUES (?, ?, ?, ?)[0m  [["created_at", "2014-08-24 06:57:01.606176"], ["name", "Dipika"], ["site_id", 3], ["updated_at", "2014-08-24 06:57:01.606176"]]
+  [1m[35m (0.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "sites"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "sites"
+Processing by SitesController#destroy as HTML
+  Parameters: {"id"=>"3"}
+  [1m[36mUser Load (0.2ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = 1  ORDER BY created_at DESC LIMIT 1[0m
+  [1m[35mSite Load (0.2ms)[0m  SELECT  "sites".* FROM "sites"  WHERE "sites"."id" = ?  ORDER BY created_at DESC LIMIT 1  [["id", 3]]
+  [1m[36mSite Load (0.1ms)[0m  [1mSELECT  "sites".* FROM "sites"  WHERE "sites"."id" = ?  ORDER BY created_at DESC LIMIT 1[0m  [["id", 3]]
+  [1m[35m (0.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mVolunteer Load (0.1ms)[0m  [1mSELECT "volunteers".* FROM "volunteers"  WHERE "volunteers"."site_id" = ?[0m  [["site_id", 3]]
+  [1m[35mSQL (0.2ms)[0m  DELETE FROM "volunteers" WHERE "volunteers"."id" = ?  [["id", 980190963]]
+  [1m[36mContributor Load (0.3ms)[0m  [1mSELECT "contributors".* FROM "contributors"  WHERE "contributors"."site_id" = ?[0m  [["site_id", 3]]
+  [1m[35mSQL (0.2ms)[0m  DELETE FROM "contributors" WHERE "contributors"."id" = ?  [["id", 980190963]]
+  [1m[36mSQL (0.1ms)[0m  [1mDELETE FROM "sites" WHERE "sites"."id" = ?[0m  [["id", 3]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Redirected to http://test.host/sites
+Completed 302 Found in 12ms (ActiveRecord: 1.4ms)
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "sites"[0m
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "sites"
+  [1m[36mSite Load (0.2ms)[0m  [1mSELECT  "sites".* FROM "sites"  WHERE "sites"."id" = 3  ORDER BY created_at DESC LIMIT 1[0m
+  [1m[35mVolunteer Load (0.1ms)[0m  SELECT  "volunteers".* FROM "volunteers"  WHERE "volunteers"."id" = 980190963 LIMIT 1
+  [1m[36mVolunteer Load (0.1ms)[0m  [1mSELECT  "volunteers".* FROM "volunteers"  WHERE "volunteers"."site_id" = 3 LIMIT 1[0m
+  [1m[35mContributor Load (0.1ms)[0m  SELECT  "contributors".* FROM "contributors"  WHERE "contributors"."id" = 980190963 LIMIT 1
+  [1m[36mContributor Load (0.1ms)[0m  [1mSELECT  "contributors".* FROM "contributors"  WHERE "contributors"."site_id" = 3 LIMIT 1[0m
+  [1m[35mInstallation Load (0.1ms)[0m  SELECT  "installations".* FROM "installations"  WHERE "installations"."id" = 980190963 LIMIT 1
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+---------------------------------------------------------------------
+SitesControllerTest: test_should_not_create_language_without_its_name
+---------------------------------------------------------------------
+  [1m[36mUser Load (0.1ms)[0m  [1mSELECT  "users".* FROM "users"  WHERE "users"."id" = ?  ORDER BY created_at DESC LIMIT 1[0m  [["id", 1]]
+  [1m[35m (0.1ms)[0m  SELECT COUNT(*) FROM "sites"
+Processing by SitesController#create as HTML
+  Parameters: {"site"=>{}}
+Redirected to http://test.host/
+Completed 302 Found in 1ms (ActiveRecord: 0.0ms)
+  [1m[36m (0.1ms)[0m  [1mSELECT COUNT(*) FROM "sites"[0m
+  [1m[35m (0.1ms)[0m  rollback transaction
+  [1m[36m (0.0ms)[0m  [1mbegin transaction[0m
+-----------------------------------
+SitesControllerTest: test_the_truth
+-----------------------------------
+  [1m[35mUser Load (0.1ms)[0m  SELECT  "users".* FROM "users"  WHERE "users"."id" = ?  ORDER BY created_at DESC LIMIT 1  [["id", 1]]
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+------------------------------------------------------------------------
+ContributorTest: test_should_not_save_contributor_without_its_field_name
+------------------------------------------------------------------------
+  [1m[36m (0.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  ROLLBACK TO SAVEPOINT active_record_1
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+-------------------------------
+ContributorTest: test_the_truth
+-------------------------------
+  [1m[36m (0.0ms)[0m  [1mrollback transaction[0m
